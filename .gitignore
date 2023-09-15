@@ -3,8 +3,9 @@
 *
 tetris_old.c
 
-!*.c
+!tetris.c
 !*.h
 !*.cmake
 !Makefile
 !CMakeLists.txt
+
