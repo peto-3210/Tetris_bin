@@ -271,7 +271,7 @@ bool Descend(){
  * @return False if there is not enough space for placing new block, true otherwise
 */
 bool PlaceNewShape(){
-    current_shape.type = 5;//rand() % 7;
+    current_shape.type = rand() % 7;
     current_shape.num_repr = shapes[current_shape.type][0].num_repr;
     current_shape.rotation = 0;
     memset(&temporary_board.board_bitarray, 0, sizeof(uint64_t) * 2);
