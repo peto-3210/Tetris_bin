@@ -1,10 +1,10 @@
 .vscode
 .build
 *
+tetris_old.c
 
 !*.c
 !*.h
 !*.cmake
 !Makefile
 !CMakeLists.txt
-!.gitignore
