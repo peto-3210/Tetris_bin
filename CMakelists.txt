@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.0)
+
+project(Tetris)
+
+add_executable(Tetris tetris.c)
+add_executable(Tetris_old tetris_old.c)
+
+target_link_libraries(Tetris ncursesw)
+target_link_libraries(Tetris_old ncursesw)

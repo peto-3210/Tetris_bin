@@ -1,0 +1,10 @@
+.vscode
+.build
+*
+
+!*.c
+!*.h
+!*.cmake
+!Makefile
+!CMakeLists.txt
+!.gitignore
