@@ -62,6 +62,7 @@ board temporary_board = {0};
 shape current_shape = {0};
 int score = 0;
 uint32_t time_diff = 100000;
+FILE* f1;
 
 
 
@@ -188,8 +189,8 @@ void overflow_override_shift(bool direction, board* current_board, int index){
  * @param full_row Index of full row
 */
 void MoveRows(int full_row){
-    int board_index = ROWS / full_row;
-    uint64_t mask = ((uint64_t)1 << (BITS_IN_ROW * (full_row % 8))) - 1;
+    int board_index = full_row / COLS;
+    uint64_t mask = ((uint64_t)1 << (BITS_IN_ROW * (full_row % BITS_IN_ROW))) - 1;
     uint64_t new_bitboard = (permanent_board.board_bitarray[board_index] & mask) << BITS_IN_ROW;
     
     permanent_board.board_bitarray[board_index] &= ~mask;
@@ -202,17 +203,20 @@ void MoveRows(int full_row){
 }
 
 /**
- * @brief Function search and removes full rows. Wrapping function for MoveRows
+ * @brief Function recursively search and removes full rows. Wrapping function for MoveRows
  * @return Number of removed rows
 */
 int RemoveFullRows(){
     int moved_rows = 0;
-    for (int x = current_shape.x_pos - 2; x <= current_shape.x_pos + 1 && x < ROWS; ++x){
+    for (int x = current_shape.x_pos - 2; x < ROWS; ++x){
         if (permanent_board.board_rows[x] == UINT8_MAX){
             permanent_board.board_rows[x] = 0;
             MoveRows(x);
             ++moved_rows;
         }
+    }
+    if (moved_rows){
+        moved_rows += RemoveFullRows();
     }
     return moved_rows;
 }
@@ -267,7 +271,7 @@ bool Descend(){
  * @return False if there is not enough space for placing new block, true otherwise
 */
 bool PlaceNewShape(){
-    current_shape.type = rand() % 7;
+    current_shape.type = 5;//rand() % 7;
     current_shape.num_repr = shapes[current_shape.type][0].num_repr;
     current_shape.rotation = 0;
     memset(&temporary_board.board_bitarray, 0, sizeof(uint64_t) * 2);
@@ -384,6 +388,7 @@ void PrintTable(bool game_is_running){
         //index += sprintf(buffer + index, output);
     }
     index += sprintf(buffer + index, "Score: %d\n", score);
+    fprintf(f1, buffer);
     game_is_running ? printw(buffer) : printf(buffer);
 }
 
@@ -400,6 +405,7 @@ inline static bool has_to_move(struct timeval* t1, struct timeval *t2, uint32_t 
 
 //Main game loop
 int main(){
+    f1 = fopen("./output.txt", "w");
     initscr();
     timeout(1);
     srand(time(0));
