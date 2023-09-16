@@ -62,7 +62,7 @@ board temporary_board = {0};
 shape current_shape = {0};
 int score = 0;
 uint32_t time_diff = 500000;
-FILE* f1;
+
 
 
 
@@ -388,7 +388,6 @@ void PrintTable(bool game_is_running){
         //index += sprintf(buffer + index, output);
     }
     index += sprintf(buffer + index, "Score: %d\n", score);
-    fprintf(f1, buffer);
     game_is_running ? printw(buffer) : printf(buffer);
 }
 
@@ -405,7 +404,6 @@ inline static bool has_to_move(struct timeval* t1, struct timeval *t2, uint32_t 
 
 //Main game loop
 int main(){
-    f1 = fopen("./output.txt", "w");
     initscr();
     timeout(1);
     srand(time(0));
