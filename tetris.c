@@ -61,7 +61,7 @@ board permanent_board = {0};
 board temporary_board = {0};
 shape current_shape = {0};
 int score = 0;
-uint32_t time_diff = 100000;
+uint32_t time_diff = 500000;
 FILE* f1;
 
 
@@ -400,7 +400,7 @@ void PrintTable(bool game_is_running){
  * @return True if difference is bigger than max_diff
 */
 inline static bool has_to_move(struct timeval* t1, struct timeval *t2, uint32_t max_diff){
-    return (t1->tv_sec * 1000000 + t1->tv_usec) - (t2->tv_sec * 1000000 + t2->tv_usec) > max_diff && 0;
+    return (t1->tv_sec * 1000000 + t1->tv_usec) - (t2->tv_sec * 1000000 + t2->tv_usec) > max_diff;
 }
 
 //Main game loop
