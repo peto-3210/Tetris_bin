@@ -67,13 +67,13 @@ uint32_t time_diff = 500000;
 
 
 
-/*typedef struct {
+typedef struct {
     board permanent_board;
     board temporary_board;
     shape current_shape;
     int score;
     uint32_t time_diff;
-} current_game;*/
+} current_game;
 
 //All shapes in all different rotation modes
 const shape_form* shapes[7] = {
